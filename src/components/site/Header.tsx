@@ -57,6 +57,17 @@ export function Header({ onOpenBag }: Props) {
     }
   }, [isSearchOpen]);
 
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      window.location.href = `/acervo?q=${encodeURIComponent(searchQuery)}`;
+    }
+  };
+
+  const handleFilterClick = () => {
+    window.location.href = "/acervo";
+  };
+
   return (
     <header
       id="top"
@@ -101,7 +112,8 @@ export function Header({ onOpenBag }: Props) {
                 <Search strokeWidth={1.5} className="h-7 w-7 md:h-8 md:w-8" />
               </motion.button>
             ) : (
-              <motion.div
+              <motion.form
+                onSubmit={handleSearch}
                 key="search-input"
                 initial={{ width: 0, opacity: 0 }}
                 animate={{ width: 320, opacity: 1 }}
@@ -110,6 +122,7 @@ export function Header({ onOpenBag }: Props) {
                 className={`flex items-center overflow-hidden border-b ${scrolled ? "border-[#021a10]/30" : "border-white/30"}`}
               >
                 <button 
+                  type="submit"
                   className={`p-2 transition-colors duration-300 ${scrolled ? "text-[#021a10] hover:text-[#CEAA71]" : "text-white hover:text-[#CEAA71]"}`}
                 >
                   <Search strokeWidth={1.5} className="h-5 w-5" />
@@ -126,6 +139,8 @@ export function Header({ onOpenBag }: Props) {
                 
                 {/* Botão de Filtros Adicionado */}
                 <button 
+                  type="button"
+                  onClick={handleFilterClick}
                   className={`p-2 transition-colors duration-300 ${scrolled ? "text-[#021a10] hover:text-[#CEAA71]" : "text-white hover:text-[#CEAA71]"}`}
                   aria-label="Filtros"
                 >
@@ -133,6 +148,7 @@ export function Header({ onOpenBag }: Props) {
                 </button>
 
                 <button 
+                  type="button"
                   onClick={() => {
                     setIsSearchOpen(false);
                     setSearchQuery("");
@@ -142,7 +158,7 @@ export function Header({ onOpenBag }: Props) {
                 >
                   <X strokeWidth={1.5} className="h-5 w-5" />
                 </button>
-              </motion.div>
+              </motion.form>
             )}
           </AnimatePresence>
         </div>

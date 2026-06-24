@@ -61,19 +61,21 @@ export function Hero({ onCTA }: Props) {
   const line2 = "Design Purista.";
 
   return (
-    <section ref={ref} className="relative h-[100svh] w-full overflow-hidden bg-[#021a10]">
-      {/* 1. Background de Vídeo Importado Localmente (Vite Public) */}
-      <video 
-        autoPlay 
-        loop 
-        muted 
-        playsInline 
-        className="absolute inset-0 w-full h-full object-cover -z-20" 
-        src="/video_home.mp4"
-      ></video>
-      
-      {/* Overlay Escuro para Visibilidade - Não suja a qualidade do vídeo */}
-      <div className="absolute inset-0 bg-black/40 -z-10" />
+    <section ref={ref} className="relative h-[100svh] w-full overflow-hidden bg-transparent">
+      {/* Container do Vídeo */}
+      <div className="absolute inset-0 w-full h-full z-0 overflow-hidden pointer-events-none">
+        <video 
+          autoPlay 
+          loop 
+          muted 
+          playsInline 
+          className="absolute top-0 left-0 w-full h-full object-cover"
+          src="https://res.cloudinary.com/djr5ccokh/video/upload/v1782336977/video_home_nvmnjt.mp4"
+        />
+        {/* Película de contraste para destacar o texto */}
+        <div className="absolute inset-0 bg-[#021a10]/50" />
+      </div>
+
 
       {/* Conteúdo Central Responsivo ao Scroll */}
       <motion.div
