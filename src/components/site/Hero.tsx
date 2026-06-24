@@ -1,5 +1,6 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
+import videoBackground from "@/assets/video_home.mp4.asset.json";
 
 type Props = { onCTA?: () => void };
 
@@ -62,36 +63,36 @@ export function Hero({ onCTA }: Props) {
 
   return (
     <section ref={ref} className="relative h-[100svh] w-full overflow-hidden bg-[#021a10]">
-      {/* 1. Background de Vídeo (Obrigatório e Crítico - Asset Local) */}
+      {/* 1. Background de Vídeo Importado Localmente (Vite) */}
       <video 
         autoPlay 
         loop 
         muted 
         playsInline 
         className="absolute inset-0 w-full h-full object-cover -z-20" 
-        src="/video_home.mp4"
+        src={videoBackground.url}
       ></video>
       
-      {/* Overlay Escuro para Visibilidade */}
+      {/* Overlay Escuro para Visibilidade - Não suja a qualidade do vídeo */}
       <div className="absolute inset-0 bg-black/40 -z-10" />
 
       {/* Conteúdo Central Responsivo ao Scroll */}
       <motion.div
         style={{ scale: contentScale, opacity: contentOpacity }}
-        className="relative z-10 flex h-full w-full flex-col items-center justify-center px-4 text-center"
+        className="relative z-10 flex h-full w-full flex-col items-center justify-center px-4 text-center pointer-events-none"
       >
         {/* Eyebrow */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.1 }}
-          className="font-montserrat text-xs md:text-sm font-medium uppercase tracking-[0.4em] text-white mb-6"
+          className="font-montserrat text-xs md:text-sm font-medium uppercase tracking-[0.4em] text-white mb-6 pointer-events-auto"
         >
           ESTÉTICA DA EXCLUSIVIDADE
         </motion.p>
 
         {/* H1 Principal Animado */}
-        <h1 className="flex flex-col items-center gap-2">
+        <h1 className="flex flex-col items-center gap-2 pointer-events-auto">
           {/* Linha 1: Branco puro com brilho inicial */}
           <motion.span
             variants={line1ContainerVariants}
@@ -110,7 +111,7 @@ export function Hero({ onCTA }: Props) {
             ))}
           </motion.span>
 
-          {/* Linha 2: Dourado italic com onda de ouro */}
+          {/* Linha 2: Dourado italic com onda de ouro infinita */}
           <motion.span
             variants={goldWaveContainerVariants}
             initial="hidden"
@@ -135,7 +136,7 @@ export function Hero({ onCTA }: Props) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1.5 }}
-          className="mt-12 flex flex-col items-center"
+          className="mt-12 flex flex-col items-center pointer-events-auto"
         >
           <button
             onClick={onCTA}
@@ -144,7 +145,7 @@ export function Hero({ onCTA }: Props) {
             QUERO MINHA PEÇA EXCLUSIVA
           </button>
           
-          {/* Assinatura 7D */}
+          {/* Assinatura 7D - Ajustada e dourada */}
           <p className="mt-8 font-playfair text-xs md:text-sm text-[#CEAA71] tracking-widest select-none drop-shadow-[0_0_8px_rgba(206,170,113,0.5)]">
             7D
           </p>
