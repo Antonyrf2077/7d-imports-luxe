@@ -1,6 +1,5 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
-import videoBackground from "@/assets/video_home.mp4.asset.json";
 
 type Props = { onCTA?: () => void };
 
@@ -63,14 +62,14 @@ export function Hero({ onCTA }: Props) {
 
   return (
     <section ref={ref} className="relative h-[100svh] w-full overflow-hidden bg-[#021a10]">
-      {/* 1. Background de Vídeo Importado Localmente (Vite) */}
+      {/* 1. Background de Vídeo */}
       <video 
         autoPlay 
         loop 
         muted 
         playsInline 
         className="absolute inset-0 w-full h-full object-cover -z-20" 
-        src={videoBackground.url}
+        src="https://res.cloudinary.com/djr5ccokh/video/upload/v1782336977/video_home_nvmnjt.mp4"
       ></video>
       
       {/* Overlay Escuro para Visibilidade - Não suja a qualidade do vídeo */}
