@@ -62,14 +62,14 @@ export function Hero({ onCTA }: Props) {
 
   return (
     <section ref={ref} className="relative h-[100svh] w-full overflow-hidden bg-[#021a10]">
-      {/* 1. Background de Vídeo */}
+      {/* 1. Background de Vídeo Importado Localmente (Vite Public) */}
       <video 
         autoPlay 
         loop 
         muted 
         playsInline 
         className="absolute inset-0 w-full h-full object-cover -z-20" 
-        src="https://res.cloudinary.com/djr5ccokh/video/upload/v1782336977/video_home_nvmnjt.mp4"
+        src="/video_home.mp4"
       ></video>
       
       {/* Overlay Escuro para Visibilidade - Não suja a qualidade do vídeo */}
