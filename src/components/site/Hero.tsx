@@ -1,158 +1,136 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
-import video from "@/assets/fundo_hero.mp4.asset.json";
 
 type Props = { onCTA?: () => void };
 
-const TITLE = ["EXCLUSIVIDADE ABSOLUTA,", "Design Purista."];
-const SUB = "CURADORIA INTERNACIONAL.".split(" ");
+// Variantes de Animação do Framer Motion
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.08, delayChildren: 0.2 },
+  },
+};
 
-function RevealWord({ word, delay }: { word: string; delay: number }) {
-  // Aplicamos a animação de ouro vivo contínuo no título.
-  return (
-    <span className="inline-block mr-3 md:mr-4 pb-4" style={{ overflow: "visible" }}>
-      <motion.span
-        initial={{ opacity: 0, y: 50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay, duration: 1.2, ease: "easeOut" }}
-        className="inline-block cursor-default will-change-[background-position,opacity,transform] pb-2 hero-gold-flow"
-      >
-        {word}
-      </motion.span>
-    </span>
-  );
-}
+const letterVariants = {
+  hidden: { opacity: 0, y: 40, backgroundPosition: "0% 0%" },
+  visible: { 
+    opacity: 1, 
+    y: 0, 
+    backgroundPosition: "0% 100%",
+    transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] }
+  },
+};
 
 export function Hero({ onCTA }: Props) {
   const ref = useRef<HTMLElement>(null);
+  
+  // Interatividade de Scroll (Parallax e FadeOut)
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"],
   });
 
-  // Inward Parallax: começa EXPANDIDO (1.15) e ENCOLHE para 1.0 ao rolar
-  const bgScale = useTransform(scrollYProgress, [0, 1], [1.15, 1.0]);
-  // Overlay escurece sutilmente ao rolar
-  const overlayOpacity = useTransform(scrollYProgress, [0, 0.7], [0.32, 0.82]);
+  const contentScale = useTransform(scrollYProgress, [0, 1], [1, 0.8]);
+  const contentOpacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
 
-  // Hero Dynamic Scale (Scroll Effect)
-  const heroScale = useTransform(scrollYProgress, [0, 1], [1, 0.72]);
-  const heroY = useTransform(scrollYProgress, [0, 1], ["0px", "-50px"]);
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0.85]);
-  const heroLetterSpacing = useTransform(scrollYProgress, [0, 1], ["-0.03em", "0.15em"]);
+  const line1 = "EXCLUSIVIDADE ABSOLUTA,";
+  const line2 = "Design Purista.";
 
   return (
     <section
       ref={ref}
-      aria-label="7D Imports — Curadoria de Exclusividade"
-      className="relative h-[100svh] w-full overflow-hidden bg-[#050505] will-change-transform"
+      className="relative h-[100svh] w-full overflow-hidden bg-[#021a10]"
     >
+      {/* Background Cinematográfico de Vídeo */}
+      <video
+        src="https://res.cloudinary.com/djr5ccokh/video/upload/v1782336977/video_home_nvmnjt.mp4"
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover -z-20"
+      />
       
-      {/* Z-0: Background & Overlays */}
-      <motion.div style={{ scale: bgScale }} className="absolute inset-0 z-0 origin-center will-change-transform transform-gpu">
-        <video
-          src={video.url}
-          autoPlay
-          loop
-          muted
-          playsInline
-          aria-hidden
-          className="h-full w-full object-cover relative z-[-1]"
-          style={{ filter: "contrast(1.12) saturate(1.05) brightness(0.82)" }}
-        />
+      {/* Overlay Escuro para Legibilidade */}
+      <div className="absolute inset-0 bg-black/40 -z-10" />
 
-        {/* Vignette Radial — bordas mais escuras, cinematic */}
-        <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,transparent_20%,rgba(0,0,0,0.88)_100%)] z-0" />
-
-        {/* Grão fotográfico premium — sensação de película */}
-        <div
-          className="absolute inset-0 mix-blend-overlay pointer-events-none z-0"
-          style={{
-            opacity: 0.22,
-            backgroundImage: "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>\")",
-          }}
-        />
-
-        {/* Luz direcional dourada — canto superior direito, muito sutil */}
-        <div
-          className="absolute inset-0 pointer-events-none mix-blend-screen"
-          style={{ background: "radial-gradient(ellipse at 85% 10%, rgba(201,151,63,0.06), transparent 50%)" }}
-        />
-
-        {/* Darkening overlay bound to scroll */}
-        <motion.div style={{ opacity: overlayOpacity }} className="absolute inset-0 bg-[#050505]" />
-      </motion.div>
-      
-      {/* Linha grossa editorial dourada separadora */}
-      <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#C9973F]/50 to-transparent z-[6]" />
-
-      {/* Z-20: Central Hero Content */}
+      {/* Conteúdo Central Responsivo ao Scroll */}
       <motion.div
-        style={{ y: heroY, scale: heroScale, opacity: heroOpacity }}
-        className="relative z-20 flex h-full flex-col items-center justify-center px-4 text-center gap-6 pb-10 pt-[10vh]"
+        style={{ scale: contentScale, opacity: contentOpacity }}
+        className="relative z-10 flex h-full w-full flex-col items-center justify-center px-4 text-center"
       >
-        <h1
-          className="w-full mx-auto font-cormorant text-white max-w-[90vw] md:max-w-[700px] lg:max-w-[900px] pt-[140px] md:pt-[160px] lg:pt-[180px] text-5xl md:text-6xl lg:text-7xl xl:text-8xl flex flex-col items-center"
-          style={{ lineHeight: 1.15, letterSpacing: heroLetterSpacing, fontWeight: 800, overflow: "visible" }}
-        >
-          {TITLE.map((line, lineIndex) => (
-            <span key={lineIndex} className="block overflow-visible pb-2">
-              {line.split(" ").map((w, i) => (
-                <RevealWord key={`${lineIndex}-${i}`} word={w} delay={0.2 + (lineIndex * 2 + i) * 0.15} />
-              ))}
-            </span>
-          ))}
-        </h1>
-
+        {/* Eyebrow */}
         <motion.p
-          initial={{ opacity: 0, y: 10 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.0, duration: 0.8 }}
-          className="text-[11px] font-bold uppercase tracking-[0.5em] text-white/50 mt-4 mb-4"
+          transition={{ duration: 0.8, delay: 0.1 }}
+          className="font-montserrat text-[10px] md:text-xs font-medium uppercase tracking-[0.4em] text-white mb-6"
         >
-          CURADORIA DE PEÇAS AUTÊNTICAS
+          ESTÉTICA DA EXCLUSIVIDADE
         </motion.p>
 
-        <motion.p
+        {/* H1 Principal Animado Letra por Letra com Degradê Iluminado */}
+        <motion.h1
+          variants={containerVariants}
           initial="hidden"
-          animate="show"
-          variants={{
-            hidden: {},
-            show: { transition: { staggerChildren: 0.08, delayChildren: 1.0 } },
-          }}
-          className="max-w-xl text-[14px] md:text-[16px] font-cormorant font-bold uppercase tracking-widest leading-relaxed text-gray-400"
+          animate="visible"
+          className="flex flex-col items-center gap-2"
         >
-          {SUB.map((w, i) => (
-            <span key={i} className="overflow-hidden inline-block mr-2">
+          {/* Linha 1 */}
+          <span className="font-playfair text-4xl md:text-6xl lg:text-7xl font-bold overflow-hidden flex flex-wrap justify-center">
+            {line1.split("").map((char, index) => (
               <motion.span
-                variants={{ hidden: { y: "100%", opacity: 0 }, show: { y: 0, opacity: 1 } }}
-                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-                className="inline-block"
+                key={`l1-${index}`}
+                variants={letterVariants}
+                className="inline-block relative pb-2"
+                style={{
+                  backgroundImage: "linear-gradient(180deg, #FFFFFF 0%, #CEAA71 40%, #9A7B4F 100%)",
+                  backgroundSize: "100% 200%",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                }}
               >
-                {w}
+                {char === " " ? "\u00A0" : char}
               </motion.span>
-            </span>
-          ))}
-        </motion.p>
+            ))}
+          </span>
 
+          {/* Linha 2 */}
+          <span className="font-playfair text-4xl md:text-6xl lg:text-7xl font-bold italic overflow-hidden flex flex-wrap justify-center mt-2">
+            {line2.split("").map((char, index) => (
+              <motion.span
+                key={`l2-${index}`}
+                variants={letterVariants}
+                className="inline-block relative pb-2"
+                style={{
+                  backgroundImage: "linear-gradient(180deg, #FFFFFF 0%, #CEAA71 40%, #9A7B4F 100%)",
+                  backgroundSize: "100% 200%",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                }}
+              >
+                {char === " " ? "\u00A0" : char}
+              </motion.span>
+            ))}
+          </span>
+        </motion.h1>
+
+        {/* Botão Flat e Minimalista */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.5, duration: 0.8 }}
-          className="mt-8 md:mt-12 z-30"
+          transition={{ duration: 0.8, delay: 1.5 }}
+          className="mt-12"
         >
-          <motion.button
+          <button
             onClick={onCTA}
-            className="hero-cta-gold inline-flex items-center gap-4 bg-[#CEAA71] px-10 py-5 text-[11px] md:text-[12px] font-bold uppercase tracking-[0.3em] text-[#111111] transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+            className="font-montserrat text-[11px] md:text-xs font-semibold uppercase tracking-[0.2em] text-[#111] bg-gradient-to-r from-[#e3c78e] to-[#CEAA71] px-10 py-4 transition-transform hover:scale-105 active:scale-95"
           >
-            <span className="relative z-10 flex items-center gap-4">
-              Quero garantir minha peça
-              <span className="transition-transform duration-300 group-hover:translate-x-2">
-                →
-              </span>
-            </span>
-            <span className="hero-cta-shimmer"></span>
-          </motion.button>
+            QUERO MINHA PEÇA EXCLUSIVA
+          </button>
         </motion.div>
       </motion.div>
     </section>
