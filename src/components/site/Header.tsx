@@ -29,9 +29,9 @@ export function Header({ onOpenBag, searchQuery = "", onSearchChange }: Props) {
   }, [scrollY]);
 
   const bgOpacity = useTransform(scrollY, [0, 140], [0, 1]);
-  const bgColor = useMotionTemplate`rgba(248,245,239,${bgOpacity})`;
-  const logoVariant = scrolled ? "light" : "dark";
-  const textColor = scrolled ? "text-[#1A1A1A]" : "text-white";
+  const bgColor = useMotionTemplate`rgba(5,5,5,${bgOpacity})`;
+  const logoVariant = "light";
+  const textColor = "text-white";
 
   useEffect(() => {
     if (menuOpen) {
@@ -186,13 +186,13 @@ export function Header({ onOpenBag, searchQuery = "", onSearchChange }: Props) {
               animate={{ x: 0 }}
               exit={{ x: "-100%" }}
               transition={{ type: "tween", ease: [0.22, 1, 0.36, 1], duration: 0.6 }}
-              className="relative flex w-[80vw] max-w-sm flex-col bg-[#F8F5EF] shadow-2xl h-full border-r border-black/5 pointer-events-auto"
+              className="relative flex w-[80vw] max-w-sm flex-col bg-[#050505] shadow-2xl h-full border-r border-white/10 pointer-events-auto"
             >
-              <div className="flex items-center justify-between p-6 border-b border-black/5">
+              <div className="flex items-center justify-between p-6 border-b border-white/10">
                 <Logo7D size={90} variant="light" />
                 <button
                   onClick={() => setMenuOpen(false)}
-                  className="text-black/60 transition-transform duration-300 hover:rotate-90 hover:text-[#0D3D2A] p-2"
+                  className="text-white/60 transition-transform duration-300 hover:rotate-90 hover:text-[#C9973F] p-2"
                 >
                   <X strokeWidth={1.5} className="h-6 w-6" />
                 </button>
@@ -207,12 +207,12 @@ export function Header({ onOpenBag, searchQuery = "", onSearchChange }: Props) {
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0, x: -20 }}
                       transition={{ duration: 0.5, delay: i * 0.1 + 0.2, ease: [0.22, 1, 0.36, 1] }}
-                      className="border-b border-black/5"
+                      className="border-b border-white/10"
                     >
                       <a
                         href={n.href}
                         onClick={() => setMenuOpen(false)}
-                        className="group flex min-h-[64px] items-center py-4 font-cormorant text-2xl font-bold uppercase tracking-wide text-black transition-all duration-300 hover:text-[#0D3D2A]"
+                        className="group flex min-h-[64px] items-center py-4 font-cormorant text-2xl font-bold uppercase tracking-wide text-white transition-all duration-300 hover:text-[#C9973F]"
                       >
                         <span className="transition-transform duration-300 group-hover:translate-x-3">
                           {n.label}

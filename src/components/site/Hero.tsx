@@ -15,15 +15,7 @@ function RevealWord({ word, delay }: { word: string; delay: number }) {
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay, duration: 1.2, ease: "easeOut" }}
-        className="inline-block cursor-default will-change-[background-position,opacity,transform] pb-2"
-        style={{
-          backgroundImage: "linear-gradient(90deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,1) 50%, rgba(255,255,255,0.4) 100%)",
-          backgroundSize: "200% 100%",
-          WebkitBackgroundClip: "text",
-          WebkitTextFillColor: "transparent",
-          backgroundClip: "text",
-          animation: "goldWave 4s infinite linear",
-        }}
+        className="inline-block cursor-default will-change-[background-position,opacity,transform] pb-2 hero-gold-flow"
       >
         {word}
       </motion.span>
@@ -151,13 +143,15 @@ export function Hero({ onCTA }: Props) {
         >
           <motion.button
             onClick={onCTA}
-            whileHover={{ opacity: 0.9 }}
-            className="inline-flex items-center gap-4 bg-[#CEAA71] px-10 py-5 text-[11px] md:text-[12px] font-bold uppercase tracking-[0.3em] text-[#111111] transition-opacity duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+            className="hero-cta-gold inline-flex items-center gap-4 bg-[#CEAA71] px-10 py-5 text-[11px] md:text-[12px] font-bold uppercase tracking-[0.3em] text-[#111111] transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black"
           >
-            Quero garantir minha peça
-            <span className="transition-transform duration-300 group-hover:translate-x-2">
-              →
+            <span className="relative z-10 flex items-center gap-4">
+              Quero garantir minha peça
+              <span className="transition-transform duration-300 group-hover:translate-x-2">
+                →
+              </span>
             </span>
+            <span className="hero-cta-shimmer"></span>
           </motion.button>
         </motion.div>
       </motion.div>
