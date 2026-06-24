@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>7D IMPORTS — Luxury Concept</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    /* 
+      ========================================
+      7D IMPORTS - SISTEMA DE ESTILO (CSS PURO)
+      ========================================
+    */
+
+    :root {
+      --color-bg: #FAFAFA;
+      --color-green: #004526;
+      --color-gold: #C5A059;
+      --color-text: #111111;
+      
+      /* Tipografia Fluida */
+      --font-title: 'Cormorant Garamond', serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      
+      --text-sm: clamp(0.75rem, 0.7vw + 0.5rem, 0.875rem); /* 12px a 14px */
+      --text-base: clamp(1rem, 1vw + 0.8rem, 1.25rem);
+      --text-xl: clamp(2rem, 5vw + 1rem, 4rem);
+      
+      /* Animação invisível */
+      --transition-lux: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--color-bg);
+      color: var(--color-text);
+      font-family: var(--font-title);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* 2. TEXTURA DE LUXO (RUÍDO CINEMATOGRÁFICO CSS) */
+    .film-grain {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.04;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='noiseFilter'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23noiseFilter)'/></svg>");
+      mix-blend-mode: multiply;
+    }
+
+    /* 4. MICROINTERAÇÕES E LINHAS EDITORIAIS */
+    .editorial-line {
+      height: 1px;
+      width: 100%;
+      background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
+      margin: 2rem 0;
+    }
+
+    /* Header e Navegação */
+    header {
+      padding: clamp(1rem, 3vw, 2.5rem) clamp(1.5rem, 5vw, 4rem);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .nav-link {
+      font-family: var(--font-mono);
+      font-size: var(--text-sm);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--color-text);
+      text-decoration: none;
+      transition: var(--transition-lux);
+      display: inline-block;
+    }
+
+    .nav-link:hover {
+      color: var(--color-green);
+      transform: translateY(-2px);
+    }
+
+    /* Container do Logotipo */
+    .logo-container {
+      width: clamp(80px, 12vw, 140px);
+      transition: var(--transition-lux);
+    }
+    
+    .logo-container:hover {
+      transform: translateY(-2px);
+    }
+
+    /* Conteúdo Principal */
+    main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 4rem 2rem;
+      min-height: 60vh;
+    }
+
+    h1 {
+      font-size: var(--text-xl);
+      color: var(--color-green);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+
+    .subtitle {
+      font-family: var(--font-mono);
+      font-size: var(--text-sm);
+      color: var(--color-gold);
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Camada de Ruído Tátil -->
+  <div class="film-grain"></div>
+
+  <!-- Cabeçalho Principal -->
+  <header>
+    <nav class="nav-links">
+      <a href="#" class="nav-link">Acervo</a>
+      <a href="#" class="nav-link">Manifesto</a>
+    </nav>
+
+    <!-- 1. ARQUITETURA DO LOGOTIPO (SVG PURO E FLAT DESIGN) -->
+    <a href="#" class="logo-container" aria-label="7D Imports Página Inicial">
+      <svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
+        <!-- 
+          Interseção Geométrica "7" e "D".
+          Cor Primária: Verde Profundo (#004526)
+        -->
+        <g fill="#004526">
+          <!-- Letra "7" -->
+          <path d="M 40,20 L 110,20 L 70,90 L 50,90 L 85,35 L 45,35 Z" />
+          
+          <!-- Letra "D" (Interseccionando o 7) -->
+          <path d="M 85,20 L 115,20 C 145,20 160,35 160,55 C 160,75 145,90 115,90 L 85,90 L 85,75 L 110,75 C 130,75 140,65 140,55 C 140,45 130,35 110,35 L 85,35 Z" />
+        </g>
+        
+        <!-- Elemento de Corte / Palavra IMPORTS em Dourado Fosco (#C5A059) -->
+        <g fill="#C5A059" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700" letter-spacing="0.3em">
+          <!-- Linhas laterais imitando o corte editorial -->
+          <rect x="10" y="103" width="30" height="1.5" />
+          <text x="48" y="107">IMPORTS</text>
+          <rect x="135" y="103" width="30" height="1.5" />
+        </g>
+      </svg>
+    </a>
+
+    <nav class="nav-links">
+      <a href="#" class="nav-link">Autenticidade</a>
+      <a href="#" class="nav-link">Contato</a>
+    </nav>
+  </header>
+
+  <!-- Separador Editorial -->
+  <div class="editorial-line"></div>
+
+  <!-- Demonstração Tipográfica -->
+  <main>
+    <div class="subtitle">Curadoria de Elite</div>
+    <h1>Exclusividade Absoluta,<br>Design Purista.</h1>
+    <div class="editorial-line" style="width: 200px; margin: 3rem auto;"></div>
+    <a href="#" class="nav-link" style="border: 1px solid var(--color-gold); padding: 1rem 2rem;">Acessar o Acervo</a>
+  </main>
+
+</body>
+</html>

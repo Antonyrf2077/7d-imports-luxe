@@ -1,0 +1,26 @@
+[33mcommit 14cf4cdfac7509690d9a5ac6dcd27c06e14a3c38[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Antony Rodrigues <antonyferrandez@gmail.com>
+Date:   Wed Jun 24 16:09:18 2026 -0300
+
+    feat: add Hero section component with scroll-linked parallax animations and video background
+
+[1mdiff --git a/src/components/site/Hero.tsx b/src/components/site/Hero.tsx[m
+[1mindex d1b7391..592d5ba 100644[m
+[1m--- a/src/components/site/Hero.tsx[m
+[1m+++ b/src/components/site/Hero.tsx[m
+[36m@@ -17,12 +17,12 @@[m [mfunction RevealWord({ word, delay }: { word: string; delay: number }) {[m
+         transition={{ delay, duration: 1.2, ease: "easeOut" }}[m
+         className="inline-block cursor-default will-change-[background-position,opacity,transform] pb-2"[m
+         style={{[m
+[31m-          backgroundImage: "linear-gradient(to right, #FFFFFF 20%, #CEAA71 50%, #FFFFFF 80%)",[m
+[31m-          backgroundSize: "200% auto",[m
+[32m+[m[32m          backgroundImage: "linear-gradient(90deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,1) 50%, rgba(255,255,255,0.4) 100%)",[m
+[32m+[m[32m          backgroundSize: "200% 100%",[m
+           WebkitBackgroundClip: "text",[m
+           WebkitTextFillColor: "transparent",[m
+           backgroundClip: "text",[m
+[31m-          animation: "goldWave 5s linear infinite",[m
+[32m+[m[32m          animation: "goldWave 4s infinite linear",[m
+         }}[m
+       >[m
+         {word}[m
