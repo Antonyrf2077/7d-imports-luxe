@@ -1,7 +1,6 @@
 import { motion, AnimatePresence, useScroll } from "framer-motion";
 import { useEffect, useState, useRef } from "react";
 import { Search, ShoppingBag, SlidersHorizontal, X, Menu } from "lucide-react";
-import { Logo7D } from "./Logo7D";
 import { useNavigate } from "@tanstack/react-router";
 
 type Props = { 
@@ -15,11 +14,11 @@ const NAV = [
   { label: "CONTATO", href: "/#footer" },
 ];
 
-function PremiumLink({ label, href, isScrolled }: { label: string; href: string; isScrolled: boolean }) {
+function PremiumLink({ label, href }: { label: string; href: string }) {
   return (
     <a
       href={href}
-      className={`group relative flex h-8 items-center justify-center overflow-hidden font-montserrat text-lg md:text-xl font-medium tracking-wide transition-colors duration-300 ${isScrolled ? "text-[#021a10]" : "text-white"}`}
+      className={`group relative flex h-8 items-center justify-center overflow-hidden font-montserrat text-lg md:text-xl font-medium tracking-wide transition-colors duration-300 text-[#021a10]`}
     >
       <div className="relative flex h-full items-center overflow-hidden">
         <motion.span
@@ -95,21 +94,21 @@ export function Header({ onOpenBag }: Props) {
           {/* Esquerda: Menu Mobile e Logo */}
           <div className="flex items-center gap-4 z-20">
             <button 
-              className={`md:hidden min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full transition-colors duration-300 ${scrolled ? "text-[#021a10] hover:text-[#CEAA71]" : "text-white hover:text-[#CEAA71]"}`}
+              className={`md:hidden min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full transition-colors duration-300 text-[#021a10] hover:text-[#CEAA71]`}
               onClick={() => setIsMenuOpen(true)}
               aria-label="Abrir menu"
             >
               <Menu strokeWidth={1.5} className="h-7 w-7" />
             </button>
-            <a href="/" className="transition-transform duration-300 hover:scale-105">
-              <Logo7D size={32} variant={scrolled ? "light" : "dark"} />
+            <a href="/" className="transition-transform duration-300 hover:scale-105 flex items-center">
+              <span className="font-serif text-4xl md:text-5xl font-normal text-[#021a10] tracking-tight">7D</span>
             </a>
           </div>
 
           {/* Centro: Links de Navegação */}
           <nav className="hidden md:flex items-center gap-10 z-10 absolute left-1/2 -translate-x-1/2">
             {NAV.map((n) => (
-              <PremiumLink key={n.label} label={n.label} href={n.href} isScrolled={scrolled} />
+              <PremiumLink key={n.label} label={n.label} href={n.href} />
             ))}
           </nav>
 
@@ -124,7 +123,7 @@ export function Header({ onOpenBag }: Props) {
                   exit={{ opacity: 0, scale: 0.8 }}
                   transition={{ duration: 0.2 }}
                   onClick={() => setIsSearchOpen(true)} 
-                  className={`min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full transition-all duration-300 hover:scale-110 ${scrolled ? "text-[#021a10] hover:text-[#CEAA71]" : "text-white hover:text-[#CEAA71]"}`}
+                  className={`min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full transition-all duration-300 hover:scale-110 text-[#021a10] hover:text-[#CEAA71]`}
                   aria-label="Pesquisa"
                 >
                   <Search strokeWidth={1.5} className="h-6 w-6 md:h-7 md:w-7" />
@@ -137,12 +136,12 @@ export function Header({ onOpenBag }: Props) {
                   animate={{ width: "min(320px, 80vw)", opacity: 1 }}
                   exit={{ width: 0, opacity: 0 }}
                   transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                  className={`flex items-center overflow-hidden border-b ${scrolled ? "border-[#021a10]/30" : "border-white/30"}`}
+                  className={`flex items-center overflow-hidden border-b border-[#021a10]/30`}
                   style={{ maxWidth: "100%" }}
                 >
                   <button 
                     type="submit"
-                    className={`min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full transition-colors duration-300 ${scrolled ? "text-[#021a10] hover:text-[#CEAA71]" : "text-white hover:text-[#CEAA71]"}`}
+                    className={`min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full transition-colors duration-300 text-[#021a10] hover:text-[#CEAA71]`}
                     aria-label="Buscar"
                   >
                     <Search strokeWidth={1.5} className="h-5 w-5" />
@@ -154,14 +153,14 @@ export function Header({ onOpenBag }: Props) {
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Busque exclusividade..."
-                    className={`h-10 w-full bg-transparent px-2 font-montserrat text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#CEAA71] focus-visible:border-transparent transition-all ${scrolled ? "text-[#021a10] placeholder:text-[#021a10]/50" : "text-white placeholder:text-white/50"}`}
+                    className={`h-10 w-full bg-transparent px-2 font-montserrat text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#CEAA71] focus-visible:border-transparent transition-all text-[#021a10] placeholder:text-[#021a10]/50`}
                   />
                   
                   {/* Botão de Filtros */}
                   <button 
                     type="button"
                     onClick={handleFilterClick}
-                    className={`min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full transition-colors duration-300 ${scrolled ? "text-[#021a10] hover:text-[#CEAA71]" : "text-white hover:text-[#CEAA71]"}`}
+                    className={`min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full transition-colors duration-300 text-[#021a10] hover:text-[#CEAA71]`}
                     aria-label="Filtros"
                   >
                     <SlidersHorizontal strokeWidth={1.5} className="h-5 w-5" />
@@ -173,7 +172,7 @@ export function Header({ onOpenBag }: Props) {
                       setIsSearchOpen(false);
                       setSearchQuery("");
                     }} 
-                    className={`min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full transition-colors duration-300 ${scrolled ? "text-[#021a10] hover:text-[#CEAA71]" : "text-white hover:text-[#CEAA71]"}`}
+                    className={`min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full transition-colors duration-300 text-[#021a10] hover:text-[#CEAA71]`}
                     aria-label="Fechar Pesquisa"
                   >
                     <X strokeWidth={1.5} className="h-5 w-5" />
@@ -186,7 +185,7 @@ export function Header({ onOpenBag }: Props) {
             {!isSearchOpen && (
               <button 
                 onClick={onOpenBag}
-                className={`min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full transition-all duration-300 hover:scale-110 ml-2 ${scrolled ? "text-[#021a10] hover:text-[#CEAA71]" : "text-white hover:text-[#CEAA71]"}`}
+                className={`min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full transition-all duration-300 hover:scale-110 ml-2 text-[#021a10] hover:text-[#CEAA71]`}
                 aria-label="Sacola"
               >
                 <ShoppingBag strokeWidth={1.5} className="h-6 w-6 md:h-7 md:w-7" />
@@ -207,7 +206,7 @@ export function Header({ onOpenBag }: Props) {
             className="fixed inset-0 z-[60] flex flex-col bg-[#021a10] text-white overflow-hidden h-[100svh]"
           >
             <div className="flex h-24 items-center justify-between px-6">
-              <Logo7D size={32} variant="dark" />
+              <span className="font-serif text-4xl md:text-5xl font-normal text-white tracking-tight">7D</span>
               <button 
                 onClick={() => setIsMenuOpen(false)} 
                 className="min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full transition-colors text-white hover:text-[#CEAA71]"
