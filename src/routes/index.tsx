@@ -43,11 +43,7 @@ function Index() {
   return (
     <main className="relative min-h-screen text-white overflow-x-hidden bg-transparent">
       <Spotlight />
-      <Header 
-        onOpenBag={() => openBag()} 
-        searchQuery={searchQuery}
-        onSearchChange={setSearchQuery}
-      />
+      <Header onOpenBag={() => openBag()} />
       
       {/* Hero — Normal flow, parallax gerenciado internamente */}
       <div className="relative w-full">

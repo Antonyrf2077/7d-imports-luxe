@@ -12,7 +12,7 @@ const line1ContainerVariants = {
   },
 };
 
-const line1LetterVariants = {
+const line1LetterVariants: any = {
   hidden: { opacity: 0, y: 40, filter: "brightness(1)" },
   visible: { 
     opacity: 1, 
@@ -31,7 +31,7 @@ const goldWaveContainerVariants = {
   },
 };
 
-const goldWaveLetterVariants = {
+const goldWaveLetterVariants: any = {
   hidden: { opacity: 0, y: 40, color: "#B58D3F" },
   visible: { 
     opacity: 1, 

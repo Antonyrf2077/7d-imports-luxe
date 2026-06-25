@@ -18,8 +18,7 @@ export function Logo7D({ className = "", size = 56, variant = "dark" }: Props) {
     <div className={`flex flex-col items-center justify-center leading-none select-none ${className}`}>
       <div 
         className="font-playfair italic font-bold" 
-        style={{ fontSize: size, color: colorPrimary, lineHeight: 0.8 }}
-        style={{ fontFamily: "'Playfair Display', serif" }} // Fallback in case class is missing
+        style={{ fontSize: size, color: colorPrimary, lineHeight: 0.8, fontFamily: "'Playfair Display', serif" }}
       >
         <span style={{ fontSize: size, color: colorPrimary, lineHeight: 0.85 }}>7D</span>
       </div>
