@@ -20,6 +20,7 @@ export function AboutSection() {
   return (
     <section
       ref={ref}
+      id="manifesto"
       aria-labelledby="about-heading"
       className="relative isolate overflow-hidden border-t border-[#C9973F]/20 bg-white min-h-[130svh] flex items-center justify-center"
     >

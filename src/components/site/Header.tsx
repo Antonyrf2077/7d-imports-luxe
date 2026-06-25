@@ -73,12 +73,15 @@ export function Header({ onOpenBag }: Props) {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      navigate({ to: "/acervo", search: { q: searchQuery } as any });
+      const el = document.getElementById("catalogo");
+      el?.scrollIntoView({ behavior: "smooth", block: "start" });
+      setIsSearchOpen(false);
     }
   };
 
   const handleFilterClick = () => {
-    navigate({ to: "/acervo" });
+    const el = document.getElementById("catalogo");
+    el?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   return (
