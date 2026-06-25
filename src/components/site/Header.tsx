@@ -103,9 +103,17 @@ export function Header({ onOpenBag }: Props) {
             >
               <Menu strokeWidth={1.5} className="h-7 w-7" />
             </button>
-            <a href="/" className="transition-transform duration-300 hover:scale-105 flex items-center">
+            <button
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+              className="transition-transform duration-300 hover:scale-105 flex items-center"
+              aria-label="Início"
+            >
               <span className="font-serif text-4xl md:text-5xl font-normal text-[#021a10] tracking-tight">7D</span>
-            </a>
+            </button>
           </div>
 
           {/* Centro: Links de Navegação */}
