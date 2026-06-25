@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
 import { Header } from "@/components/site/Header";
 import { Hero } from "@/components/site/Hero";
 import { Catalog } from "@/components/site/Catalog";
@@ -31,10 +30,6 @@ export const Route = createFileRoute("/")({
 function Index() {
   const [open, setOpen] = useState(false);
   const [pid, setPid] = useState<string | null>(null);
-  const [searchQuery, setSearchQuery] = useState("");
-  const { scrollYProgress } = useScroll();
-  const marqueeX = useTransform(scrollYProgress, [0, 1], ["0%", "-60%"]);
-
   const openBag = (productId?: string) => {
     setPid(productId || null);
     setOpen(true);
@@ -43,11 +38,7 @@ function Index() {
   return (
     <main className="relative min-h-screen text-white overflow-x-hidden bg-transparent">
       <Spotlight />
-      <Header 
-        onOpenBag={() => openBag()} 
-        searchQuery={searchQuery}
-        onSearchChange={setSearchQuery}
-      />
+      <Header onOpenBag={() => openBag()} />
       
       {/* Hero — Normal flow, parallax gerenciado internamente */}
       <div className="relative w-full">
@@ -56,7 +47,7 @@ function Index() {
 
       {/* Solid Content Overlay */}
       <div className="relative z-10">
-        <Catalog onBuy={(id) => openBag(id)} searchQuery={searchQuery} />
+        <Catalog onBuy={(id) => openBag(id)} />
         <AboutSection />
         <Footer />
       </div>
