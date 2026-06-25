@@ -29,17 +29,18 @@ export function Hero({ onCTA }: Props) {
 
   return (
     <section ref={ref} className="relative min-h-[100svh] pt-24 pb-12 flex flex-col justify-center w-full overflow-hidden bg-transparent">
-      {/* Container do Vídeo Claro */}
-      <div className="absolute inset-0 w-full h-full -z-20 overflow-hidden pointer-events-none">
-        <video 
-          autoPlay 
-          loop 
-          muted 
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover object-[85%_center] md:object-center"
-          src="https://res.cloudinary.com/djr5ccokh/video/upload/v1782391709/Flow_1080p_202606250941_1_j0wtb9.mp4"
-        />
-      </div>
+      {/* Background Layer: Video */}
+      <video 
+        autoPlay 
+        loop 
+        muted 
+        playsInline
+        className="absolute top-0 left-0 w-full h-full object-cover -z-20"
+        src="https://res.cloudinary.com/djr5ccokh/video/upload/v1782391709/Flow_1080p_202606250941_1_j0wtb9.mp4"
+      />
+      
+      {/* Background Layer: Overlay levíssimo para legibilidade */}
+      <div className="absolute top-0 left-0 w-full h-full bg-white/20 -z-10 pointer-events-none" />
 
       {/* Conteúdo Central Responsivo ao Scroll */}
       <motion.div
