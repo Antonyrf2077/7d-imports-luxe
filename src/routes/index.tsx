@@ -31,7 +31,6 @@ export const Route = createFileRoute("/")({
 function Index() {
   const [open, setOpen] = useState(false);
   const [pid, setPid] = useState<string | null>(null);
-  const [searchQuery, setSearchQuery] = useState("");
   const { scrollYProgress } = useScroll();
   const marqueeX = useTransform(scrollYProgress, [0, 1], ["0%", "-60%"]);
 
@@ -52,7 +51,7 @@ function Index() {
 
       {/* Solid Content Overlay */}
       <div className="relative z-10">
-        <Catalog onBuy={(id) => openBag(id)} searchQuery={searchQuery} />
+        <Catalog onBuy={(id) => openBag(id)} />
         <AboutSection />
         <Footer />
       </div>
