@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Hero = () => {
+export const Hero = () => {
   return (
     <section className="relative w-full h-screen overflow-hidden">
       {/* VÍDEO DE FUNDO - A camada mais profunda (-z-20) */}
