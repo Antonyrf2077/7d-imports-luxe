@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const Hero = () => {
+export const Hero = ({ onCTA }: { onCTA?: () => void }) => {
   return (
     <section className="relative w-full h-screen overflow-hidden">
       {/* VÍDEO DE FUNDO - A camada mais profunda (-z-20) */}
@@ -25,7 +25,7 @@ export const Hero = () => {
         <h1 className="font-serif text-7xl font-normal text-[#021a10] mb-6">
           PEÇAS<br />EXCLUSIVAS
         </h1>
-        <button className="bg-[#CEAA71] text-[#021a10] px-10 py-4 uppercase tracking-widest font-semibold hover:opacity-90 transition">
+        <button onClick={onCTA} className="bg-[#CEAA71] text-[#021a10] px-10 py-4 uppercase tracking-widest font-semibold hover:opacity-90 transition">
           Quero minha peça exclusiva
         </button>
       </div>
