@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
 import { Header } from "@/components/site/Header";
 import { Hero } from "@/components/site/Hero";
 import { Catalog } from "@/components/site/Catalog";
@@ -31,9 +30,6 @@ export const Route = createFileRoute("/")({
 function Index() {
   const [open, setOpen] = useState(false);
   const [pid, setPid] = useState<string | null>(null);
-  const { scrollYProgress } = useScroll();
-  const marqueeX = useTransform(scrollYProgress, [0, 1], ["0%", "-60%"]);
-
   const openBag = (productId?: string) => {
     setPid(productId || null);
     setOpen(true);
