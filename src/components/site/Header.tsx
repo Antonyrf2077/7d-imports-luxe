@@ -1,6 +1,8 @@
 import { motion, AnimatePresence, useScroll } from "framer-motion";
 import { useEffect, useState, useRef } from "react";
-import { Search, ShoppingBag, SlidersHorizontal, X } from "lucide-react";
+import { Search, ShoppingBag, SlidersHorizontal, X, Menu } from "lucide-react";
+import { Logo7D } from "./Logo7D";
+import { useNavigate } from "@tanstack/react-router";
 
 type Props = { 
   onOpenBag?: () => void;
@@ -43,7 +45,9 @@ export function Header({ onOpenBag }: Props) {
   const [scrolled, setScrolled] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const unsub = scrollY.on("change", (v) => setScrolled(v > 50));
@@ -57,113 +61,183 @@ export function Header({ onOpenBag }: Props) {
     }
   }, [isSearchOpen]);
 
+  // Trava o scroll do body quando o menu está aberto
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => { document.body.style.overflow = ""; };
+  }, [isMenuOpen]);
+
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      window.location.href = `/acervo?q=${encodeURIComponent(searchQuery)}`;
+      navigate({ to: "/acervo", search: { q: searchQuery } as any });
     }
   };
 
   const handleFilterClick = () => {
-    window.location.href = "/acervo";
+    navigate({ to: "/acervo" });
   };
 
   return (
-    <header
-      id="top"
-      className={`fixed inset-x-0 top-0 z-50 h-24 w-full transition-all duration-500 ${
-        scrolled ? "bg-white/95 backdrop-blur-md shadow-sm" : "bg-transparent"
-      }`}
-    >
-      <div className="mx-auto flex h-full w-full max-w-[1600px] items-center justify-between px-6 md:px-12 relative">
-        
-        {/* Esquerda: Sacola */}
-        <div className="flex items-center z-20">
-          <button 
-            onClick={onOpenBag}
-            className={`transition-all duration-300 hover:scale-110 ${scrolled ? "text-[#021a10] hover:text-[#CEAA71]" : "text-white hover:text-[#CEAA71]"}`}
-            aria-label="Sacola"
-          >
-            <ShoppingBag strokeWidth={1.5} className="h-7 w-7 md:h-8 md:w-8" />
-          </button>
-        </div>
+    <>
+      <header
+        id="top"
+        className={`fixed inset-x-0 top-0 z-50 h-24 w-full transition-all duration-500 ${
+          scrolled ? "bg-white/95 backdrop-blur-md shadow-sm" : "bg-transparent"
+        }`}
+      >
+        <div className="mx-auto flex h-full w-full max-w-[1600px] items-center justify-between px-6 md:px-12 relative">
+          
+          {/* Esquerda: Menu Mobile e Logo */}
+          <div className="flex items-center gap-4 z-20">
+            <button 
+              className={`md:hidden min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full transition-colors duration-300 ${scrolled ? "text-[#021a10] hover:text-[#CEAA71]" : "text-white hover:text-[#CEAA71]"}`}
+              onClick={() => setIsMenuOpen(true)}
+              aria-label="Abrir menu"
+            >
+              <Menu strokeWidth={1.5} className="h-7 w-7" />
+            </button>
+            <a href="/" className="transition-transform duration-300 hover:scale-105">
+              <Logo7D size={32} variant={scrolled ? "light" : "dark"} />
+            </a>
+          </div>
 
-        {/* Centro: Links de Navegação */}
-        <nav className="hidden md:flex items-center gap-10 z-10 absolute left-1/2 -translate-x-1/2">
-          {NAV.map((n) => (
-            <PremiumLink key={n.label} label={n.label} href={n.href} isScrolled={scrolled} />
-          ))}
-        </nav>
+          {/* Centro: Links de Navegação */}
+          <nav className="hidden md:flex items-center gap-10 z-10 absolute left-1/2 -translate-x-1/2">
+            {NAV.map((n) => (
+              <PremiumLink key={n.label} label={n.label} href={n.href} isScrolled={scrolled} />
+            ))}
+          </nav>
 
-        {/* Direita: Pesquisa Expansiva */}
-        <div className="flex items-center z-20 relative h-full">
-          <AnimatePresence>
-            {!isSearchOpen ? (
-              <motion.button 
-                key="search-icon"
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.8 }}
-                transition={{ duration: 0.2 }}
-                onClick={() => setIsSearchOpen(true)} 
-                className={`transition-all duration-300 hover:scale-110 ${scrolled ? "text-[#021a10] hover:text-[#CEAA71]" : "text-white hover:text-[#CEAA71]"}`}
-                aria-label="Pesquisa"
+          {/* Direita: Pesquisa e Sacola */}
+          <div className="flex items-center gap-4 z-20 relative h-full" style={{ maxWidth: "100%" }}>
+            <AnimatePresence>
+              {!isSearchOpen ? (
+                <motion.button 
+                  key="search-icon"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.8 }}
+                  transition={{ duration: 0.2 }}
+                  onClick={() => setIsSearchOpen(true)} 
+                  className={`min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full transition-all duration-300 hover:scale-110 ${scrolled ? "text-[#021a10] hover:text-[#CEAA71]" : "text-white hover:text-[#CEAA71]"}`}
+                  aria-label="Pesquisa"
+                >
+                  <Search strokeWidth={1.5} className="h-6 w-6 md:h-7 md:w-7" />
+                </motion.button>
+              ) : (
+                <motion.form
+                  onSubmit={handleSearch}
+                  key="search-input"
+                  initial={{ width: 0, opacity: 0 }}
+                  animate={{ width: "min(320px, 80vw)", opacity: 1 }}
+                  exit={{ width: 0, opacity: 0 }}
+                  transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                  className={`flex items-center overflow-hidden border-b ${scrolled ? "border-[#021a10]/30" : "border-white/30"}`}
+                  style={{ maxWidth: "100%" }}
+                >
+                  <button 
+                    type="submit"
+                    className={`min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full transition-colors duration-300 ${scrolled ? "text-[#021a10] hover:text-[#CEAA71]" : "text-white hover:text-[#CEAA71]"}`}
+                    aria-label="Buscar"
+                  >
+                    <Search strokeWidth={1.5} className="h-5 w-5" />
+                  </button>
+                  
+                  <input
+                    ref={inputRef}
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="Busque exclusividade..."
+                    className={`h-10 w-full bg-transparent px-2 font-montserrat text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#CEAA71] focus-visible:border-transparent transition-all ${scrolled ? "text-[#021a10] placeholder:text-[#021a10]/50" : "text-white placeholder:text-white/50"}`}
+                  />
+                  
+                  {/* Botão de Filtros */}
+                  <button 
+                    type="button"
+                    onClick={handleFilterClick}
+                    className={`min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full transition-colors duration-300 ${scrolled ? "text-[#021a10] hover:text-[#CEAA71]" : "text-white hover:text-[#CEAA71]"}`}
+                    aria-label="Filtros"
+                  >
+                    <SlidersHorizontal strokeWidth={1.5} className="h-5 w-5" />
+                  </button>
+
+                  <button 
+                    type="button"
+                    onClick={() => {
+                      setIsSearchOpen(false);
+                      setSearchQuery("");
+                    }} 
+                    className={`min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full transition-colors duration-300 ${scrolled ? "text-[#021a10] hover:text-[#CEAA71]" : "text-white hover:text-[#CEAA71]"}`}
+                    aria-label="Fechar Pesquisa"
+                  >
+                    <X strokeWidth={1.5} className="h-5 w-5" />
+                  </button>
+                </motion.form>
+              )}
+            </AnimatePresence>
+
+            {/* Sacola agora na direita junto com a pesquisa */}
+            {!isSearchOpen && (
+              <button 
+                onClick={onOpenBag}
+                className={`min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full transition-all duration-300 hover:scale-110 ml-2 ${scrolled ? "text-[#021a10] hover:text-[#CEAA71]" : "text-white hover:text-[#CEAA71]"}`}
+                aria-label="Sacola"
               >
-                <Search strokeWidth={1.5} className="h-7 w-7 md:h-8 md:w-8" />
-              </motion.button>
-            ) : (
-              <motion.form
-                onSubmit={handleSearch}
-                key="search-input"
-                initial={{ width: 0, opacity: 0 }}
-                animate={{ width: 320, opacity: 1 }}
-                exit={{ width: 0, opacity: 0 }}
-                transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                className={`flex items-center overflow-hidden border-b ${scrolled ? "border-[#021a10]/30" : "border-white/30"}`}
-              >
-                <button 
-                  type="submit"
-                  className={`p-2 transition-colors duration-300 ${scrolled ? "text-[#021a10] hover:text-[#CEAA71]" : "text-white hover:text-[#CEAA71]"}`}
-                >
-                  <Search strokeWidth={1.5} className="h-5 w-5" />
-                </button>
-                
-                <input
-                  ref={inputRef}
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Busque sua exclusividade..."
-                  className={`h-10 w-full bg-transparent px-2 font-montserrat text-sm focus:outline-none ${scrolled ? "text-[#021a10] placeholder:text-[#021a10]/50" : "text-white placeholder:text-white/50"}`}
-                />
-                
-                {/* Botão de Filtros Adicionado */}
-                <button 
-                  type="button"
-                  onClick={handleFilterClick}
-                  className={`p-2 transition-colors duration-300 ${scrolled ? "text-[#021a10] hover:text-[#CEAA71]" : "text-white hover:text-[#CEAA71]"}`}
-                  aria-label="Filtros"
-                >
-                  <SlidersHorizontal strokeWidth={1.5} className="h-5 w-5" />
-                </button>
-
-                <button 
-                  type="button"
-                  onClick={() => {
-                    setIsSearchOpen(false);
-                    setSearchQuery("");
-                  }} 
-                  className={`p-2 transition-colors duration-300 ${scrolled ? "text-[#021a10] hover:text-[#CEAA71]" : "text-white hover:text-[#CEAA71]"}`}
-                  aria-label="Fechar Pesquisa"
-                >
-                  <X strokeWidth={1.5} className="h-5 w-5" />
-                </button>
-              </motion.form>
+                <ShoppingBag strokeWidth={1.5} className="h-6 w-6 md:h-7 md:w-7" />
+              </button>
             )}
-          </AnimatePresence>
+          </div>
         </div>
+      </header>
 
-      </div>
-    </header>
+      {/* Menu Mobile Fullscreen Drawer */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-[60] flex flex-col bg-[#021a10] text-white overflow-hidden h-[100svh]"
+          >
+            <div className="flex h-24 items-center justify-between px-6">
+              <Logo7D size={32} variant="dark" />
+              <button 
+                onClick={() => setIsMenuOpen(false)} 
+                className="min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full transition-colors text-white hover:text-[#CEAA71]"
+                aria-label="Fechar menu"
+              >
+                <X className="h-8 w-8" strokeWidth={1.5} />
+              </button>
+            </div>
+            
+            <nav className="flex flex-1 flex-col items-center justify-center gap-10">
+              {NAV.map((n) => (
+                <a
+                  key={n.label}
+                  href={n.href}
+                  onClick={() => setIsMenuOpen(false)}
+                  className="font-playfair text-3xl md:text-4xl font-medium tracking-wider text-white hover:text-[#CEAA71] transition-colors"
+                >
+                  {n.label}
+                </a>
+              ))}
+            </nav>
+            
+            <div className="pb-12 flex justify-center">
+              <p className="font-montserrat text-xs tracking-[0.4em] text-[#CEAA71] opacity-70">
+                EXCLUSIVIDADE ABSOLUTA
+              </p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }
